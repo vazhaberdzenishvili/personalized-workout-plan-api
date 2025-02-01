@@ -10,6 +10,7 @@ from rest_framework import status
 
 
 CREATE_USER_URL = reverse('user:create')
+TOKEN_URL = reverse('user:token_obtain_pair')
 
 
 def create_user(**params):
@@ -22,6 +23,12 @@ class PublicUserApiTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
+        self.user_details = {
+            'name': 'Test Name',
+            'email': 'test1@example.com',
+            'password': 'testpass123',
+        }
+        self.user = get_user_model().objects.create_user(**self.user_details)
 
     def test_create_user_success(self):
         """Test creating a user is successful."""
@@ -63,3 +70,47 @@ class PublicUserApiTests(TestCase):
             email=payload['email']
         ).exists()
         self.assertFalse(user_exists)
+
+    def test_create_token_for_user(self):
+        """Test JWT token is generated for valid credentials."""
+        payload = {
+            'email': self.user.email,
+            'password': self.user_details['password'],
+        }
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertIn('access', res.data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_create_token_bad_credentials(self):
+        """Test returns error if credentials are invalid."""
+        payload = {
+            'email': self.user.email,
+            'password': 'wrongpass',
+        }
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('access', res.data)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_token_email_not_found(self):
+        """Test error returned if user does not exist."""
+        payload = {
+            'email': 'unknown@example.com',
+            'password': 'pass123',
+        }
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('access', res.data)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_token_blank_password(self):
+        """Test posting a blank password returns an error."""
+        payload = {
+            'email': self.user.email,
+            'password': '',
+        }
+        res = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('access', res.data)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
