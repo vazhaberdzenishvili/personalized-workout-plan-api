@@ -3,6 +3,7 @@ Tests for models.
 """
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from core import models
 
 
 class ModelTests(TestCase):
@@ -45,3 +46,26 @@ class ModelTests(TestCase):
         )
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_create_muscle_group(self):
+        """Test creating a muscle group"""
+        target_muscles = models.MuscleGroup.objects.create(
+            name="Biceps",
+            description="Muscles in the upper arm, responsible for arm flexion"
+        )
+        self.assertEqual(str(target_muscles), target_muscles.name)
+
+    def test_create_exercise_with_muscle_groups(self):
+        """Test creating an exercise with associated muscle groups"""
+        muscle_group = models.MuscleGroup.objects.create(
+            name="Biceps",
+            description="Muscles in the upper arm, responsible for arm flexion"
+        )
+        exercise = models.Exercise.objects.create(
+            name="Bicep Curls",
+            description="An exercise to strengthen the biceps",
+            instructions="Curl arms while holding weights"
+        )
+        exercise.target_muscles.add(muscle_group)
+        self.assertEqual(str(exercise), exercise.name)
+        self.assertIn(muscle_group, exercise.target_muscles.all())
