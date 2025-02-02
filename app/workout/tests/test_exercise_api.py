@@ -31,6 +31,7 @@ class ExerciseAPITest(APITestCase):
         self.exercise = Exercise.objects.create(
             name="Bicep Curl",
             description="A basic bicep exercise.",
+            instructions="Lower hips to parallel, then stand"
         )
         self.exercise.target_muscles.set([self.muscle_group])
 
@@ -82,7 +83,8 @@ class AdminExerciseAPITest(APITestCase):
         )
         self.exercise = Exercise.objects.create(
             name="Squat",
-            description="Strengthens legs and glutes"
+            description="Strengthens legs and glutes",
+            instructions="Lower hips to parallel, then stand"
         )
         self.exercise.target_muscles.add(self.muscle_group)
 
@@ -91,6 +93,7 @@ class AdminExerciseAPITest(APITestCase):
         payload = {
             'name': 'Deadlift',
             'description': 'Targets multiple muscle groups',
+            'instructions': "Lower hips to parallel, then stand",
             'target_muscles': [self.muscle_group.id]
         }
         res = self.client.post(exercise_url(), payload)
