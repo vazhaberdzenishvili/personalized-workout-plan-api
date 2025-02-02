@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core.models import MuscleGroup, Exercise
+from typing import List
 
 
 class MuscleGroupSerializer(serializers.ModelSerializer):
@@ -28,6 +29,6 @@ class ExerciseSerializer(serializers.ModelSerializer):
             exercise.target_muscles.set(target_muscles_data)
         return exercise
 
-    def get_target_muscle_names(self, obj):
+    def get_target_muscle_names(self, obj) -> List[str]:
         """Return a list of muscle names."""
         return [muscle.name for muscle in obj.target_muscles.all()]
