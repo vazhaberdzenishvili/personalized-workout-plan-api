@@ -38,71 +38,133 @@ class Command(BaseCommand):
             'Target muscles populated successfully!'))
 
         exercises = [
-            {"name": "Push-up", "description": (
-                "Bodyweight exercise for chest, shoulders, and triceps"
-            ), "target_muscles": ["Chest", "Shoulders", "Arms"]},
-            {"name": "Squat", "description": (
-                "Lower-body exercise for thighs, hips, and buttocks"
-            ), "target_muscles": ["Legs", "Glutes", "Core"]},
-            {"name": "Deadlift", "description": (
-                "A weightlifting exercise for the back, glutes, and legs."
-            ), "target_muscles": ["Back", "Legs", "Glutes"]},
-            {"name": "Bench Press", "description": (
-                "A chest exercise that also targets shoulders and triceps."
-            ), "target_muscles": ["Chest", "Shoulders", "Arms"]},
-            {"name": "Pull-up", "description": (
-                "Upper-body exercise for back and biceps."
-            ), "target_muscles": ["Back", "Arms"]},
-            {"name": "Overhead Press", "description": (
-                "Shoulder exercise for triceps and upper chest."
-            ), "target_muscles": ["Shoulders", "Arms"]},
-            {"name": "Lunge", "description": (
-                "Lower-body exercise for legs and glutes."
-            ), "target_muscles": ["Legs", "Glutes"]},
-            {"name": "Leg Press", "description": (
-                "A machine-based exercise that targets the legs and glutes."
-            ), "target_muscles": ["Legs", "Glutes"]},
-            {"name": "Bicep Curl", "description": (
-                "An exercise focusing on the biceps.",
-            ), "target_muscles": ["Arms"]},
-            {"name": "Tricep Dip", "description": (
-                "An exercise targeting the triceps using bodyweight."
-            ), "target_muscles": ["Arms"]},
-            {"name": "Lat Pulldown", "description": (
-                "A back exercise that also engages the biceps and shoulders."
-            ), "target_muscles": ["Back", "Arms"]},
-            {"name": "Romanian Deadlift", "description": (
-                "A hamstring-focused deadlift variation."
-            ), "target_muscles": ["Legs", "Glutes"]},
-            {"name": "Plank", "description": (
-                "Core exercise for abs and lower back."
-            ), "target_muscles": ["Core"]},
-            {"name": "Russian Twist", "description": (
-                "Rotational core exercise.",
-            ), "target_muscles": ["Core"]},
-            {"name": "Mountain Climbers", "description": (
-                "A full-body workout that engages the core and legs."
-            ), "target_muscles": ["Core", "Legs"]},
-            {"name": "Dumbbell Rows", "description": (
-                "A back exercise that targets the upper back and biceps."
-            ), "target_muscles": ["Back", "Arms"]},
-            {"name": "Chest Fly", "description": (
-                "A chest exercise using dumbbells or cables.",
-            ), "target_muscles": ["Chest"]},
-            {"name": "Calf Raise", "description": "Calf exercise.",
-             "target_muscles": ["Calves"]},
-            {"name": "Forearm Curl", "description": (
-                "An exercise that targets the forearms and wrist flexors."
-            ), "target_muscles": ["Forearms"]},
-            {"name": "Tricep Pushdown", "description": (
-                "Tricep exercise with a cable machine."
-            ), "target_muscles": ["Arms"]}
+            {
+                "name": "Push-up",
+                "description": "Chest, shoulders, triceps exercise",
+                "instruction": "Lower and push up body",
+                "target_muscles": ["Chest", "Shoulders", "Arms"]
+            },
+            {
+                "name": "Squat",
+                "description": "exercise for thighs, hips, and buttocks",
+                "instruction": "Lower hips, then stand",
+                "target_muscles": ["Legs", "Glutes", "Core"]
+            },
+            {
+                "name": "Deadlift",
+                "description": "exercise for the back, glutes, and legs",
+                "instruction": "Lift bar, then lower",
+                "target_muscles": ["Back", "Legs", "Glutes"]
+            },
+            {
+                "name": "Bench Press",
+                "description": "exercise that targets shoulders and triceps",
+                "instruction": "Press bar up and down",
+                "target_muscles": ["Chest", "Shoulders", "Arms"]
+            },
+            {
+                "name": "Pull-up",
+                "description": "Upper-body exercise for back and biceps",
+                "instruction": "Pull up body",
+                "target_muscles": ["Back", "Arms"]
+            },
+            {
+                "name": "Overhead Press",
+                "description": "Shoulder exercise for triceps and upper chest",
+                "instruction": "Press weights overhead",
+                "target_muscles": ["Shoulders", "Arms"]
+            },
+            {
+                "name": "Lunge",
+                "description": "Lower-body exercise for legs and glutes",
+                "instruction": "Step forward, lower body",
+                "target_muscles": ["Legs", "Glutes"]
+            },
+            {
+                "name": "Leg Press",
+                "description": "exercise targets the legs and glutes",
+                "instruction": "Press platform with legs",
+                "target_muscles": ["Legs", "Glutes"]
+            },
+            {
+                "name": "Bicep Curl",
+                "description": "An exercise focusing on the biceps",
+                "instruction": "Curl weights up",
+                "target_muscles": ["Arms"]
+            },
+            {
+                "name": "Tricep Dip",
+                "description": "exercise targets triceps using bodyweight",
+                "instruction": "Dip body, then lift",
+                "target_muscles": ["Arms"]
+            },
+            {
+                "name": "Lat Pulldown",
+                "description": "A back exercise for biceps and shoulders",
+                "instruction": "Pull bar down to chest",
+                "target_muscles": ["Back", "Arms"]
+            },
+            {
+                "name": "Romanian Deadlift",
+                "description": "A hamstring-focused deadlift variation",
+                "instruction": "Lower bar to shin, then stand",
+                "target_muscles": ["Legs", "Glutes"]
+            },
+            {
+                "name": "Plank",
+                "description": "Core exercise for abs and lower back",
+                "instruction": "Hold body in line",
+                "target_muscles": ["Core"]
+            },
+            {
+                "name": "Russian Twist",
+                "description": "Rotational core exercise",
+                "instruction": "Twist torso side to side",
+                "target_muscles": ["Core"]
+            },
+            {
+                "name": "Mountain Climbers",
+                "description": "A full-body workout for the core and legs",
+                "instruction": "Run in place on hands",
+                "target_muscles": ["Core", "Legs"]
+            },
+            {
+                "name": "Dumbbell Rows",
+                "description": "A back exercise for upper back and biceps",
+                "instruction": "Row weights to waist",
+                "target_muscles": ["Back", "Arms"]
+            },
+            {
+                "name": "Chest Fly",
+                "description": "A chest exercise using dumbbells or cables",
+                "instruction": "Open and close arms",
+                "target_muscles": ["Chest"]
+            },
+            {
+                "name": "Calf Raise",
+                "description": "Calf exercise",
+                "instruction": "Raise and lower heels",
+                "target_muscles": ["Calves"]
+            },
+            {
+                "name": "Forearm Curl",
+                "description": "An exercise for forearms and wrist flexors",
+                "instruction": "Curl weights up",
+                "target_muscles": ["Forearms"]
+            },
+            {
+                "name": "Tricep Pushdown",
+                "description": "Tricep exercise with a cable machine",
+                "instruction": "Push bar down",
+                "target_muscles": ["Arms"]
+            }
         ]
 
         for exercise_data in exercises:
             exercise, created = Exercise.objects.get_or_create(
                 name=exercise_data["name"],
-                description=exercise_data["description"]
+                description=exercise_data["description"],
+                instructions=exercise_data["instruction"]
             )
 
             target_muscles = MuscleGroup.objects.filter(
