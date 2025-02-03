@@ -2,7 +2,8 @@ from rest_framework import serializers
 from core.models import (
     MuscleGroup,
     Exercise,
-    WorkoutPlan
+    WorkoutPlan,
+    WorkoutPlanExercise
 )
 from typing import List
 
@@ -50,3 +51,23 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
             'duration_per_session'
         ]
         read_only_fields = ['id', 'user']
+
+
+class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
+    exercise = serializers.PrimaryKeyRelatedField(
+        queryset=Exercise.objects.all())
+    workout_plan = serializers.PrimaryKeyRelatedField(
+        queryset=WorkoutPlan.objects.all())
+
+    class Meta:
+        model = WorkoutPlanExercise
+        fields = [
+            'id',
+            'repetitions',
+            'sets',
+            'duration',
+            'distance',
+            'workout_plan',
+            'exercise'
+        ]
+        read_only_fields = ['id']

@@ -13,6 +13,11 @@ router.register('exercises', views.ExerciseViewSet,
 router.register(
     'workout_plan', views.WorkoutPlanViewSet, basename='workout-plan'
 )
+router.register(
+    'workout_plan_exercise',
+    views.WorkoutPlanExerciseViewSet,
+    basename='workout-plan-exercise'
+)
 
 app_name = 'workout'
 

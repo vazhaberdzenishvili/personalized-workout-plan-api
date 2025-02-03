@@ -3,11 +3,13 @@ from .permissions import IsAdminOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 
 from core.models import (
     MuscleGroup,
     Exercise,
-    WorkoutPlan
+    WorkoutPlan,
+    WorkoutPlanExercise
 )
 from workout import serializers
 
@@ -36,3 +38,20 @@ class WorkoutPlanViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Create a new workout plan."""
         serializer.save(user=self.request.user)
+
+
+class WorkoutPlanExerciseViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.WorkoutPlanExerciseSerializer
+    queryset = WorkoutPlanExercise.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(workout_plan__user=self.request.user)
+
+    def perform_create(self, serializer):
+        workout_plan_id = self.request.data.get('workout_plan')
+        workout_plan = get_object_or_404(WorkoutPlan,
+                                         id=workout_plan_id,
+                                         user=self.request.user)
+        serializer.save(workout_plan=workout_plan)
