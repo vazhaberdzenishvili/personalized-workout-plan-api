@@ -3,7 +3,8 @@ from core.models import (
     MuscleGroup,
     Exercise,
     WorkoutPlan,
-    WorkoutPlanExercise
+    WorkoutPlanExercise,
+    WorkoutSession
 )
 from typing import List
 
@@ -71,3 +72,14 @@ class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
             'exercise'
         ]
         read_only_fields = ['id']
+
+
+class WorkoutSessionSerializer(serializers.ModelSerializer):
+    workout_plan = serializers.PrimaryKeyRelatedField(
+        queryset=WorkoutPlan.objects.all())
+
+    class Meta:
+        model = WorkoutSession
+
+        fields = ['id', 'user', 'workout_plan', 'date', 'completed']
+        read_only_fields = ['id', 'user']

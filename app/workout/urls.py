@@ -18,6 +18,10 @@ router.register(
     views.WorkoutPlanExerciseViewSet,
     basename='workout-plan-exercise'
 )
+router.register(
+    'workout_session', views.WorkoutSessionViewSet,
+    basename='workout-session'
+)
 
 app_name = 'workout'
 

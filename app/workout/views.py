@@ -9,7 +9,8 @@ from core.models import (
     MuscleGroup,
     Exercise,
     WorkoutPlan,
-    WorkoutPlanExercise
+    WorkoutPlanExercise,
+    WorkoutSession
 )
 from workout import serializers
 
@@ -55,3 +56,17 @@ class WorkoutPlanExerciseViewSet(viewsets.ModelViewSet):
                                          id=workout_plan_id,
                                          user=self.request.user)
         serializer.save(workout_plan=workout_plan)
+
+
+class WorkoutSessionViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.WorkoutSessionSerializer
+    queryset = WorkoutSession.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        """Create a new workout session"""
+        serializer.save(user=self.request.user)
