@@ -4,7 +4,8 @@ from core.models import (
     Exercise,
     WorkoutPlan,
     WorkoutPlanExercise,
-    WorkoutSession
+    WorkoutSession,
+    Progress
 )
 from typing import List
 
@@ -83,3 +84,24 @@ class WorkoutSessionSerializer(serializers.ModelSerializer):
 
         fields = ['id', 'user', 'workout_plan', 'date', 'completed']
         read_only_fields = ['id', 'user']
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        model = Progress
+        fields = ["id", "user", "date", "weight", "notes"]
+        read_only_fields = ["id", "user"]
+
+    def validate_date(self, value):
+        """Check if a progress entry already exists for the date"""
+        user = self.context['request'].user
+        progress_id = self.instance.id if self.instance else None
+
+        if Progress.objects.filter(
+            user=user, date=value
+        ).exclude(id=progress_id).exists():
+            raise serializers.ValidationError(
+                "You have already logged progress for this date")
+        return value

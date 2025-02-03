@@ -10,7 +10,8 @@ from core.models import (
     Exercise,
     WorkoutPlan,
     WorkoutPlanExercise,
-    WorkoutSession
+    WorkoutSession,
+    Progress
 )
 from workout import serializers
 
@@ -69,4 +70,18 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """Create a new workout session"""
+        serializer.save(user=self.request.user)
+
+
+class ProgressViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.ProgressSerializer
+    queryset = Progress.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('-date')
+
+    def perform_create(self, serializer):
+        """Create a new Progress record"""
         serializer.save(user=self.request.user)

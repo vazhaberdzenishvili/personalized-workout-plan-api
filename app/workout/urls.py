@@ -22,6 +22,7 @@ router.register(
     'workout_session', views.WorkoutSessionViewSet,
     basename='workout-session'
 )
+router.register('progress', views.ProgressViewSet, basename='progress')
 
 app_name = 'workout'
 
