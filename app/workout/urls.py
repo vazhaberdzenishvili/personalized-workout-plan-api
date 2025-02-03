@@ -10,6 +10,9 @@ router.register('muscle_groups', views.MuscleGroupViewSet,
                 basename='muscle-group')
 router.register('exercises', views.ExerciseViewSet,
                 basename='exercise')
+router.register(
+    'workout_plan', views.WorkoutPlanViewSet, basename='workout-plan'
+)
 
 app_name = 'workout'
 

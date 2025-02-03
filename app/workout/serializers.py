@@ -1,5 +1,9 @@
 from rest_framework import serializers
-from core.models import MuscleGroup, Exercise
+from core.models import (
+    MuscleGroup,
+    Exercise,
+    WorkoutPlan
+)
 from typing import List
 
 
@@ -32,3 +36,17 @@ class ExerciseSerializer(serializers.ModelSerializer):
     def get_target_muscle_names(self, obj) -> List[str]:
         """Return a list of muscle names."""
         return [muscle.name for muscle in obj.target_muscles.all()]
+
+
+class WorkoutPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkoutPlan
+        fields = [
+            'id',
+            'user',
+            'name',
+            'frequency',
+            'goal',
+            'duration_per_session'
+        ]
+        read_only_fields = ['id', 'user']
